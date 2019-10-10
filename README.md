@@ -1,5 +1,7 @@
 # Comparison between C++ / Python / pybind11 / cppyy
 
+This project is used to show Python C++ extension through cppyy and pybind11.
+
 ## Dependencies
 
  - Eigen3 (mandatory)
