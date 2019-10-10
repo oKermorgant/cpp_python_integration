@@ -44,5 +44,5 @@ def elapsed_time(n, dim):
     for fct,method in candidates:
         t0 = time.time()
         fct(n, dim)
-        print('{}\t-> {:.2f} ms'.format(method, 1000*(time.time() - t0)))
+        print('   {}\t-> {:.2f} ms'.format(method, 1000*(time.time() - t0)))
   
