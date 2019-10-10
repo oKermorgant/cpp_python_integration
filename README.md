@@ -1,4 +1,4 @@
-# Simple comparison between C++ / Python / pybind11 / cppyy
+# Comparison between C++ / Python / pybind11 / cppyy
 
 Clone this repo with `--recurse-submodules` to have access to pybind11.
 
