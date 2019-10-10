@@ -1,10 +1,10 @@
 # Comparison between C++ / Python / pybind11 / cppyy
 
-Clone this repo with `--recurse-submodules` to have access to pybind11.
-
 ## Dependencies
 
-Eigen3 (mandatory), cppyy and pybind11 (optionnal)
+ - Eigen3 (mandatory)
+ - cppyy (optionnal): `pip3 install cppyy`
+ - pybind11 (optionnal): `git clone https://github.com/pybind/pybind11` and install or copy to this folder
 
 ## Compiling
 
