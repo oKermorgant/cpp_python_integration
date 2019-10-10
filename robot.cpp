@@ -8,7 +8,7 @@ Robot::Robot(double _x, double _y, double _theta, std::string _name)
 
 void Robot::printPosition()
 {
-  std::cout << name << " is at (" << x << ", " << y << ", " << theta << ")\n"          ;
+  std::cout << name << " is at (" << x << ", " << y << ", " << theta << ")\n";
 }
 
 double Robot::bigComputation(uint n, const uint dim)

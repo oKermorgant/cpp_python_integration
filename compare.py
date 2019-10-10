@@ -10,7 +10,7 @@ except:
     
 try:
     from robot_libpb import Robot as Robot_pybind
-    robot_pybind = Robot_pybind()
+    robot_pybind = Robot_pybind(0,0,0,"my robot")
 except:
     robot_pybind = None
     

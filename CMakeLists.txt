@@ -3,8 +3,9 @@ project(cpp_python_integration)
 
 set(CMAKE_BUILD_TYPE Release)
 
-option(WITH_CPPYY "cppyy bidings" OFF)
-option(WITH_PYBIND "pybind" OFF)
+option(WITH_CPPYY "cppyy bidings" ON)
+option(WITH_PYBIND "pybind" ON)
+set(PYBIND11_PYTHON_VERSION 3.6)
 
 find_package(Eigen3)
 
@@ -16,9 +17,9 @@ set(MY_LIBS robot_lib)
 add_library(${MY_LIBS} SHARED ${SOURCES})
 
 if(WITH_PYBIND)
-    set(MY_LIBS ${MY_LIBS} robotpb_lib)
-    add_subdirectory(pybind11)
-    pybind11_add_module(robotpb_lib ${SOURCES} robot_pybind.cpp)
+    find_package(pybind11 REQUIRED)
+    set(MY_LIBS ${MY_LIBS} robot_libpb)
+    pybind11_add_module(robot_libpb SHARED ${SOURCES} robot_pybind.cpp)
 endif()
 
 foreach(MY_LIB ${MY_LIBS})
@@ -31,18 +32,18 @@ add_executable(main main.cpp)
 target_link_libraries(main robot_lib)
 
 if(WITH_CPPYY)
-execute_process(COMMAND cling-config --cmake OUTPUT_VARIABLE CPPYY_MODULE_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
-message("CPPYY_MODULE_PATH: " ${CPPYY_MODULE_PATH})
-list(INSERT CMAKE_MODULE_PATH 0 ${CPPYY_MODULE_PATH})
+    execute_process(COMMAND cling-config --cmake OUTPUT_VARIABLE CPPYY_MODULE_PATH OUTPUT_STRIP_TRAILING_WHITESPACE)
+    message("CPPYY_MODULE_PATH: " ${CPPYY_MODULE_PATH})
+    list(INSERT CMAKE_MODULE_PATH 0 ${CPPYY_MODULE_PATH})
 
-find_package(Cppyy)
+    find_package(Cppyy)
 
-cppyy_add_bindings(
-   "robot_lib" "0.0.1" "Olivier" "ok@ok.com"
-   LANGUAGE_STANDARD "14"
-   GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
-   INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
-   LINK_LIBRARIES robot_lib
-   H_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
-   H_FILES ${HEADERS})
+    cppyy_add_bindings(
+    "robot_lib" "0.0.1" "Olivier" "ok@ok.com"
+    LANGUAGE_STANDARD "14"
+    GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
+    INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
+    LINK_LIBRARIES robot_lib
+    H_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
+    H_FILES ${HEADERS})
 endif()
